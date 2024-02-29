@@ -3,9 +3,9 @@ import re
 predictive_table = {
     "S": [{"input": re.compile("function"), "production": ["F", "N", "PM"]}],
     "F": [{"input": re.compile("function"), "production": ["function"]}],
-    "PM": [{"input": re.compile("\("), "production": ["PA", "PL", "PC"]}],
-    "PA": [{"input": re.compile("\("), "production": ["("]}],
-    "PC": [{"input": re.compile("\)"), "production": [")"]}],
+    "PM": [{"input": re.compile(r"\("), "production": ["PA", "PL", "PC"]}],
+    "PA": [{"input": re.compile(r"\("), "production": ["("]}],
+    "PC": [{"input": re.compile(r"\)"), "production": [")"]}],
     "PL": [{"input": re.compile("var"), "production": ["V", "X", "LT"]}],
     "V": [{"input": re.compile("var"), "production": ["var"]}],
     "X": [{"input": re.compile(r"^[a-z]+$"), "production": ["N", ":", "T"]}],
@@ -13,7 +13,7 @@ predictive_table = {
     "RN": [
         {"input": re.compile(r"^[a-z]+$"), "production": ["L", "RN"]},
         {"input": re.compile(":"), "production": []},
-        {"input": re.compile("\("), "production": []},
+        {"input": re.compile(r"\("), "production": []},
     ],
     "L": [
         {
@@ -32,7 +32,7 @@ predictive_table = {
         },
     ],
     "LT": [
-        {"input": re.compile("\)"), "production": []},
+        {"input": re.compile(r"\)"), "production": []},
         {"input": re.compile(";"), "production": ["P", "X", "LT"]},
     ],
     "P": [{"input": re.compile(";"), "production": [";"]}],
