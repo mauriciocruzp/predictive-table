@@ -8,16 +8,16 @@ predictive_table = {
     "PC": [{"input": re.compile("\)"), "production": [")"]}],
     "PL": [{"input": re.compile("var"), "production": ["V", "X", "LT"]}],
     "V": [{"input": re.compile("var"), "production": ["var"]}],
-    "X": [{"input": re.compile("[a-z]"), "production": ["N", ":", "T"]}],
-    "N": [{"input": re.compile("[a-z]"), "production": ["L", "RN"]}],
+    "X": [{"input": re.compile(r"^[a-z]+$"), "production": ["N", ":", "T"]}],
+    "N": [{"input": re.compile(r"^[a-z]+$"), "production": ["L", "RN"]}],
     "RN": [
-        {"input": re.compile("[a-z]"), "production": ["L", "RN"]},
+        {"input": re.compile(r"^[a-z]+$"), "production": ["L", "RN"]},
         {"input": re.compile(":"), "production": []},
         {"input": re.compile("\("), "production": []},
     ],
     "L": [
         {
-            "input": re.compile("[a-z]"),
+            "input": re.compile(r"^[a-z]+$"),
             "production": ["same"],
         }
     ],
@@ -50,11 +50,11 @@ def analize(input):
     input = separate(input)
     for i in range(len(input)):
         while True:
-            history += f"{stack}\n"
+            history += f"{stack} | Entrada: {input[0]}\n"
             if len(stack) == 0:
-                return False
+                return False, history
             if len(input) == 0:
-                return False
+                return False, history
             if stack[-1] == input[0]:
                 stack.pop()
                 input.pop(0)
@@ -70,10 +70,10 @@ def analize(input):
                                 stack.append(input[0])
                         break
                 else:
-                    return False
+                    return False, history
             else:
-                return False
-    history += f"{stack}"
+                return False, history
+    history += f"{stack} | Entrada: {input}\n"
     print(history)
 
     if stack[-1] == "$" and len(input) == 0:
